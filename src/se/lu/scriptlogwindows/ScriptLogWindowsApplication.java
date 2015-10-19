@@ -5,19 +5,32 @@
  */
 package se.lu.scriptlogwindows;
 
+import java.awt.Rectangle;
+import java.beans.PropertyChangeListener;
 import javax.swing.JLayeredPane;
 
 /**
  *
  * @author ling-jfr
  */
-public class ScriptLogXPApplication extends javax.swing.JFrame {
+public class ScriptLogWindowsApplication extends javax.swing.JFrame {
+
+    private static Maf maf;
 
     /**
      * Creates new form ScriptLogXPApplication
      */
-    public ScriptLogXPApplication() {
+    public ScriptLogWindowsApplication() {
         initComponents();
+
+        maf = Maf.getInstance();
+        ((javax.swing.plaf.basic.BasicInternalFrameUI) maf.getUI()).setNorthPane(null);
+        ((javax.swing.plaf.basic.BasicInternalFrameUI) maf.getUI()).setEastPane(null);
+        ((javax.swing.plaf.basic.BasicInternalFrameUI) maf.getUI()).setSouthPane(null);
+        ((javax.swing.plaf.basic.BasicInternalFrameUI) maf.getUI()).setWestPane(null);
+        //maf.setTitle("ScriptJ - Messages");
+        jDesktopPane1.add(maf, JLayeredPane.DEFAULT_LAYER);
+
     }
 
     /**
@@ -94,6 +107,11 @@ public class ScriptLogXPApplication extends javax.swing.JFrame {
         jToolBar1.setRollover(true);
 
         jDesktopPane1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jDesktopPane1.addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentResized(java.awt.event.ComponentEvent evt) {
+                jDesktopPane1ComponentResized(evt);
+            }
+        });
 
         javax.swing.GroupLayout jDesktopPane1Layout = new javax.swing.GroupLayout(jDesktopPane1);
         jDesktopPane1.setLayout(jDesktopPane1Layout);
@@ -306,8 +324,14 @@ public class ScriptLogXPApplication extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
+        maf.setVisible(true);
         newLog();
     }//GEN-LAST:event_formWindowActivated
+
+    private void jDesktopPane1ComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_jDesktopPane1ComponentResized
+        Rectangle r = jDesktopPane1.getBounds();
+        maf.setBounds(0, r.height - 100, r.width, 100);
+    }//GEN-LAST:event_jDesktopPane1ComponentResized
 
     /**
      * @param args the command line arguments
@@ -326,20 +350,21 @@ public class ScriptLogXPApplication extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ScriptLogXPApplication.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ScriptLogWindowsApplication.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ScriptLogXPApplication.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ScriptLogWindowsApplication.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ScriptLogXPApplication.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ScriptLogWindowsApplication.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ScriptLogXPApplication.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ScriptLogWindowsApplication.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ScriptLogXPApplication().setVisible(true);
+                new ScriptLogWindowsApplication().setVisible(true);
             }
         });
     }
@@ -402,6 +427,7 @@ public class ScriptLogXPApplication extends javax.swing.JFrame {
         jDesktopPane1.add(njif, JLayeredPane.MODAL_LAYER);
         FrameCenterer.center(njif);
         njif.setVisible(true);
+        njif.addPropertyChangeListener("OK_PRESSED", new ScriptLogStarter());
     }
 
 }

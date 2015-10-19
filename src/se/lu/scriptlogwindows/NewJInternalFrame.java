@@ -64,23 +64,23 @@ public class NewJInternalFrame extends javax.swing.JInternalFrame {
         jPanel6.setPreferredSize(new java.awt.Dimension(286, 210));
 
         fiNameTextField.setNextFocusableComponent(faNameTextField);
-        fiNameTextField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                fiNameTextFieldActionPerformed(evt);
+        fiNameTextField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                fiNameTextFieldKeyReleased(evt);
             }
         });
 
         faNameTextField.setNextFocusableComponent(ageTextField);
-        faNameTextField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                faNameTextFieldActionPerformed(evt);
+        faNameTextField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                faNameTextFieldKeyReleased(evt);
             }
         });
 
         ageTextField.setNextFocusableComponent(mRadioButton);
-        ageTextField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ageTextFieldActionPerformed(evt);
+        ageTextField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                ageTextFieldKeyReleased(evt);
             }
         });
 
@@ -153,7 +153,7 @@ public class NewJInternalFrame extends javax.swing.JInternalFrame {
                             .addComponent(faNameTextField)
                             .addComponent(jLabel3)
                             .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(30, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -175,7 +175,7 @@ public class NewJInternalFrame extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(ageTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(30, Short.MAX_VALUE))
+                .addContainerGap(27, Short.MAX_VALUE))
         );
 
         jLabel9.setText("Other Info");
@@ -236,7 +236,7 @@ public class NewJInternalFrame extends javax.swing.JInternalFrame {
                     .addComponent(jLabel7)
                     .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(30, Short.MAX_VALUE))
+                .addContainerGap(28, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -249,7 +249,7 @@ public class NewJInternalFrame extends javax.swing.JInternalFrame {
                 .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jButton5)
-                .addContainerGap(93, Short.MAX_VALUE))
+                .addContainerGap(90, Short.MAX_VALUE))
         );
 
         jLabel10.setText("Other Info");
@@ -304,6 +304,11 @@ public class NewJInternalFrame extends javax.swing.JInternalFrame {
         okButton.setText("OK");
         okButton.setEnabled(false);
         okButton.setNextFocusableComponent(fiNameTextField);
+        okButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                okButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -350,21 +355,21 @@ public class NewJInternalFrame extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void faNameTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_faNameTextFieldActionPerformed
-        checkValues();
-    }//GEN-LAST:event_faNameTextFieldActionPerformed
-
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
         dispose();
     }//GEN-LAST:event_cancelButtonActionPerformed
 
-    private void fiNameTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fiNameTextFieldActionPerformed
+    private void fiNameTextFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_fiNameTextFieldKeyReleased
         checkValues();
-    }//GEN-LAST:event_fiNameTextFieldActionPerformed
+    }//GEN-LAST:event_fiNameTextFieldKeyReleased
 
-    private void ageTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ageTextFieldActionPerformed
+    private void faNameTextFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_faNameTextFieldKeyReleased
         checkValues();
-    }//GEN-LAST:event_ageTextFieldActionPerformed
+    }//GEN-LAST:event_faNameTextFieldKeyReleased
+
+    private void ageTextFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_ageTextFieldKeyReleased
+        checkValues();
+    }//GEN-LAST:event_ageTextFieldKeyReleased
 
     private void mRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mRadioButtonActionPerformed
         checkValues();
@@ -373,6 +378,17 @@ public class NewJInternalFrame extends javax.swing.JInternalFrame {
     private void fRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fRadioButtonActionPerformed
         checkValues();
     }//GEN-LAST:event_fRadioButtonActionPerformed
+
+    private void okButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okButtonActionPerformed
+        firePropertyChange("OK_PRESSED", false, new ScriptLogInfo(
+                fiNameTextField.getText(),
+                faNameTextField.getText(),
+                ageTextField.getText().length(),
+                mRadioButton.isSelected(),
+                fRadioButton.isSelected()
+        ));
+        this.dispose();
+    }//GEN-LAST:event_okButtonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -410,13 +426,18 @@ public class NewJInternalFrame extends javax.swing.JInternalFrame {
     // End of variables declaration//GEN-END:variables
 
     private void checkValues() {
-        if (fiNameTextField.getText().length() > 0 &&
-                faNameTextField.getText().length() > 0 &&
-                ageTextField.getText().length() > 0 &&
-                (mRadioButton.isSelected() || fRadioButton.isSelected())) {
+//        Maf.println(":" + fiNameTextField.getText() +
+//                " " + faNameTextField.getText() +
+//                " " + ageTextField.getText() +
+//                " (" + mRadioButton.isSelected() + ", " + fRadioButton.isSelected() + ")");
+        if (fiNameTextField.getText().length() > 0
+                && faNameTextField.getText().length() > 0
+                && ageTextField.getText().length() > 0
+                && (mRadioButton.isSelected() || fRadioButton.isSelected())) {
             okButton.setEnabled(true);
         } else {
             okButton.setEnabled(false);
         }
     }
+
 }

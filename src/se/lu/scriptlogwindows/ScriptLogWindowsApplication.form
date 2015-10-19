@@ -316,6 +316,9 @@
           </Border>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="componentResized" listener="java.awt.event.ComponentListener" parameters="java.awt.event.ComponentEvent" handler="jDesktopPane1ComponentResized"/>
+      </Events>
 
       <Layout>
         <DimensionLayout dim="0">
