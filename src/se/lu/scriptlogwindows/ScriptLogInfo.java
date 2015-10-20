@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package se.lu.scriptlogwindows;
 
 /**
@@ -16,13 +11,15 @@ class ScriptLogInfo {
     private final String fText1;
     private final boolean fSelected;
     private final boolean fSelected0;
+    private final String fText2;
 
-    public ScriptLogInfo(String text, String text0, String text1, boolean selected, boolean selected0) {
+    ScriptLogInfo(String text, String text0, String text1, boolean selected, boolean selected0, String text2) {
         fText = text;
         fText0 = text0;
         fText1 = text1;
         fSelected = selected;
         fSelected0 = selected0;
+        fText2 = text2;
     }
 
     /**
@@ -58,6 +55,13 @@ class ScriptLogInfo {
      */
     public boolean isfSelected0() {
         return fSelected0;
+    }
+
+    /**
+     * @return the fText2
+     */
+    public String getfText2() {
+        return fText2;
     }
 
 }

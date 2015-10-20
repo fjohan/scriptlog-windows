@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package se.lu.scriptlogwindows;
 
 import java.awt.event.KeyEvent;
@@ -11,12 +6,12 @@ import java.awt.event.KeyEvent;
  *
  * @author ling-jfr
  */
-public class NewJInternalFrame extends javax.swing.JInternalFrame {
+public class NewLogFrame extends javax.swing.JInternalFrame {
 
     /**
      * Creates new form NewJInternalFrame
      */
-    public NewJInternalFrame() {
+    public NewLogFrame() {
         initComponents();
     }
 
@@ -45,7 +40,7 @@ public class NewJInternalFrame extends javax.swing.JInternalFrame {
         jLabel4 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        otherInfoTextArea = new javax.swing.JTextArea();
         jPanel3 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
@@ -61,7 +56,10 @@ public class NewJInternalFrame extends javax.swing.JInternalFrame {
         cancelButton = new javax.swing.JButton();
         okButton = new javax.swing.JButton();
 
+        setClosable(true);
         setTitle("ScriptLog - New...");
+
+        jTabbedPane1.setFocusable(false);
 
         jPanel6.setPreferredSize(new java.awt.Dimension(286, 210));
 
@@ -155,7 +153,7 @@ public class NewJInternalFrame extends javax.swing.JInternalFrame {
                             .addComponent(faNameTextField)
                             .addComponent(jLabel3)
                             .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(30, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -177,7 +175,7 @@ public class NewJInternalFrame extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(ageTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(30, Short.MAX_VALUE))
+                .addContainerGap(27, Short.MAX_VALUE))
         );
 
         jLabel9.setText("Other Info");
@@ -185,9 +183,9 @@ public class NewJInternalFrame extends javax.swing.JInternalFrame {
         jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         jScrollPane1.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
+        otherInfoTextArea.setColumns(20);
+        otherInfoTextArea.setRows(5);
+        jScrollPane1.setViewportView(otherInfoTextArea);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -238,7 +236,7 @@ public class NewJInternalFrame extends javax.swing.JInternalFrame {
                     .addComponent(jLabel7)
                     .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(30, Short.MAX_VALUE))
+                .addContainerGap(28, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -251,7 +249,7 @@ public class NewJInternalFrame extends javax.swing.JInternalFrame {
                 .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jButton5)
-                .addContainerGap(93, Short.MAX_VALUE))
+                .addContainerGap(90, Short.MAX_VALUE))
         );
 
         jLabel10.setText("Other Info");
@@ -293,8 +291,14 @@ public class NewJInternalFrame extends javax.swing.JInternalFrame {
         jTabbedPane1.addTab("Fill in Number", jPanel3);
 
         helpButton.setText("Help");
+        helpButton.setEnabled(false);
 
         eraseButton.setText("Erase");
+        eraseButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                eraseButtonActionPerformed(evt);
+            }
+        });
 
         cancelButton.setText("Cancel");
         cancelButton.addActionListener(new java.awt.event.ActionListener() {
@@ -396,6 +400,16 @@ public class NewJInternalFrame extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_okButtonKeyReleased
 
+    private void eraseButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eraseButtonActionPerformed
+        fiNameTextField.setText("");
+        faNameTextField.setText("");
+        ageTextField.setText("");
+        buttonGroup1.clearSelection();
+        otherInfoTextArea.setText("");
+        checkValues();
+        fiNameTextField.requestFocusInWindow();
+    }//GEN-LAST:event_eraseButtonActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField ageTextField;
@@ -424,21 +438,26 @@ public class NewJInternalFrame extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextArea jTextArea2;
     private javax.swing.JTextField jTextField4;
     private javax.swing.JRadioButton mRadioButton;
     private javax.swing.JButton okButton;
+    private javax.swing.JTextArea otherInfoTextArea;
     // End of variables declaration//GEN-END:variables
 
     private void checkValues() {
-//        Maf.println(":" + fiNameTextField.getText() +
-//                " " + faNameTextField.getText() +
-//                " " + ageTextField.getText() +
-//                " (" + mRadioButton.isSelected() + ", " + fRadioButton.isSelected() + ")");
+        String s = ageTextField.getText();
+        boolean validAge = false;
+        if (isInteger(s)) {
+            int checkInt = Integer.parseInt(s);
+            if (checkInt >= 1 && checkInt <= 150) {
+                validAge = true;
+            }
+        }
+
         if (fiNameTextField.getText().length() > 0
                 && faNameTextField.getText().length() > 0
-                && ageTextField.getText().length() > 0
+                && validAge
                 && (mRadioButton.isSelected() || fRadioButton.isSelected())) {
             okButton.setEnabled(true);
         } else {
@@ -452,9 +471,34 @@ public class NewJInternalFrame extends javax.swing.JInternalFrame {
                 faNameTextField.getText(),
                 ageTextField.getText(),
                 mRadioButton.isSelected(),
-                fRadioButton.isSelected()
+                fRadioButton.isSelected(),
+                otherInfoTextArea.getText()
         ));
         dispose();
     }
 
+    // utility
+    public static boolean isInteger(String str) {
+        if (str == null) {
+            return false;
+        }
+        int length = str.length();
+        if (length == 0) {
+            return false;
+        }
+        int i = 0;
+        if (str.charAt(0) == '-') {
+            if (length == 1) {
+                return false;
+            }
+            i = 1;
+        }
+        for (; i < length; i++) {
+            char c = str.charAt(i);
+            if (c <= '/' || c >= ':') {
+                return false;
+            }
+        }
+        return true;
+    }
 }

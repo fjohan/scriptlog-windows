@@ -1,12 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package se.lu.scriptlogwindows;
 
 import java.awt.Rectangle;
 import javax.swing.JLayeredPane;
+import se.lu.scriptlogwindows.directorykeeper.DirectoryKeeper;
 
 /**
  *
@@ -15,12 +11,14 @@ import javax.swing.JLayeredPane;
 public class ScriptLogWindowsApplication extends javax.swing.JFrame {
 
     private static Maf maf;
+    private boolean makeVisibleAtStartup;
 
     /**
-     * Creates new form ScriptLogXPApplication
+     * Creates new form ScriptLogWindowsApplication
      */
     public ScriptLogWindowsApplication() {
         initComponents();
+        DirectoryKeeper.INSTANCE.initWorkingDir();
 
         maf = Maf.getInstance();
         ((javax.swing.plaf.basic.BasicInternalFrameUI) maf.getUI()).setNorthPane(null);
@@ -46,8 +44,8 @@ public class ScriptLogWindowsApplication extends javax.swing.JFrame {
         jDesktopPane1 = new javax.swing.JDesktopPane();
         menuBar = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
-        openMenuItem = new javax.swing.JMenuItem();
+        fileNewMenuItem = new javax.swing.JMenuItem();
+        fileOpenMenuItem = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
         jMenuItem3 = new javax.swing.JMenuItem();
@@ -55,6 +53,9 @@ public class ScriptLogWindowsApplication extends javax.swing.JFrame {
         jMenuItem5 = new javax.swing.JMenuItem();
         jMenuItem6 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem25 = new javax.swing.JMenuItem();
+        jMenuItem26 = new javax.swing.JMenuItem();
         jMenuItem7 = new javax.swing.JMenuItem();
         jSeparator2 = new javax.swing.JPopupMenu.Separator();
         printerSetupMenuItem = new javax.swing.JMenuItem();
@@ -85,7 +86,7 @@ public class ScriptLogWindowsApplication extends javax.swing.JFrame {
         jSeparator4 = new javax.swing.JPopupMenu.Separator();
         jMenuItem9 = new javax.swing.JMenuItem();
         jMenuItem10 = new javax.swing.JMenuItem();
-        jMenuItem12 = new javax.swing.JMenuItem();
+        settingsSettingsMenuItem = new javax.swing.JMenuItem();
         helpMenu = new javax.swing.JMenu();
         contentsMenuItem = new javax.swing.JMenuItem();
         jMenuItem13 = new javax.swing.JMenuItem();
@@ -126,17 +127,17 @@ public class ScriptLogWindowsApplication extends javax.swing.JFrame {
         fileMenu.setMnemonic('f');
         fileMenu.setText("File");
 
-        jMenuItem1.setText("New");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+        fileNewMenuItem.setText("New");
+        fileNewMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
+                fileNewMenuItemActionPerformed(evt);
             }
         });
-        fileMenu.add(jMenuItem1);
+        fileMenu.add(fileNewMenuItem);
 
-        openMenuItem.setMnemonic('o');
-        openMenuItem.setText("Open...");
-        fileMenu.add(openMenuItem);
+        fileOpenMenuItem.setMnemonic('o');
+        fileOpenMenuItem.setText("Open...");
+        fileMenu.add(fileOpenMenuItem);
 
         jMenuItem2.setText("Open Eye Track file...");
         fileMenu.add(jMenuItem2);
@@ -155,6 +156,16 @@ public class ScriptLogWindowsApplication extends javax.swing.JFrame {
         fileMenu.add(jMenuItem6);
 
         jMenu3.setText("Partial Analysis");
+
+        jMenuItem1.setText("Final Edited Text...");
+        jMenu3.add(jMenuItem1);
+
+        jMenuItem25.setText("Linear Text...");
+        jMenu3.add(jMenuItem25);
+
+        jMenuItem26.setText("Time Segmentation...");
+        jMenu3.add(jMenuItem26);
+
         fileMenu.add(jMenu3);
 
         jMenuItem7.setText("Analysing Sets of files...");
@@ -241,7 +252,7 @@ public class ScriptLogWindowsApplication extends javax.swing.JFrame {
         jMenuItem23.setText("View Recorder Panel");
         jMenu1.add(jMenuItem23);
 
-        jMenuItem24.setText("jMenuItem24");
+        jMenuItem24.setText("TitleBar in Editor Window");
         jMenu1.add(jMenuItem24);
 
         menuBar.add(jMenu1);
@@ -258,8 +269,13 @@ public class ScriptLogWindowsApplication extends javax.swing.JFrame {
         jMenuItem10.setText("EyeTrack Configuration...");
         jMenu2.add(jMenuItem10);
 
-        jMenuItem12.setText("Settings...");
-        jMenu2.add(jMenuItem12);
+        settingsSettingsMenuItem.setText("Settings...");
+        settingsSettingsMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                settingsSettingsMenuItemActionPerformed(evt);
+            }
+        });
+        jMenu2.add(settingsSettingsMenuItem);
 
         menuBar.add(jMenu2);
 
@@ -280,7 +296,7 @@ public class ScriptLogWindowsApplication extends javax.swing.JFrame {
         helpMenu.add(jSeparator5);
 
         aboutMenuItem.setMnemonic('a');
-        aboutMenuItem.setText("About ScriptLogXP...");
+        aboutMenuItem.setText("About ScriptLog...");
         helpMenu.add(aboutMenuItem);
 
         menuBar.add(helpMenu);
@@ -317,20 +333,30 @@ public class ScriptLogWindowsApplication extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem14ActionPerformed
 
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        newLog();
+    private void fileNewMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fileNewMenuItemActionPerformed
+        openNewLogFrame();
 
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
+    }//GEN-LAST:event_fileNewMenuItemActionPerformed
 
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
-        maf.setVisible(true);
-        //newLog();
+        if (!makeVisibleAtStartup) {
+            maf.setVisible(true);
+            //openNewLogFrame();
+            openSettingsFrame();
+            makeVisibleAtStartup = true;
+        }
+
+
     }//GEN-LAST:event_formWindowActivated
 
     private void jDesktopPane1ComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_jDesktopPane1ComponentResized
         Rectangle r = jDesktopPane1.getBounds();
         maf.setBounds(0, r.height - 100, r.width, 100);
     }//GEN-LAST:event_jDesktopPane1ComponentResized
+
+    private void settingsSettingsMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_settingsSettingsMenuItemActionPerformed
+        openSettingsFrame();
+    }//GEN-LAST:event_settingsSettingsMenuItemActionPerformed
 
     /**
      * @param args the command line arguments
@@ -377,6 +403,8 @@ public class ScriptLogWindowsApplication extends javax.swing.JFrame {
     private javax.swing.JMenu editMenu;
     private javax.swing.JMenuItem exitMenuItem;
     private javax.swing.JMenu fileMenu;
+    private javax.swing.JMenuItem fileNewMenuItem;
+    private javax.swing.JMenuItem fileOpenMenuItem;
     private javax.swing.JMenu helpMenu;
     private javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JMenu jMenu1;
@@ -385,7 +413,6 @@ public class ScriptLogWindowsApplication extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem10;
     private javax.swing.JMenuItem jMenuItem11;
-    private javax.swing.JMenuItem jMenuItem12;
     private javax.swing.JMenuItem jMenuItem13;
     private javax.swing.JMenuItem jMenuItem14;
     private javax.swing.JMenuItem jMenuItem15;
@@ -399,6 +426,8 @@ public class ScriptLogWindowsApplication extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem22;
     private javax.swing.JMenuItem jMenuItem23;
     private javax.swing.JMenuItem jMenuItem24;
+    private javax.swing.JMenuItem jMenuItem25;
+    private javax.swing.JMenuItem jMenuItem26;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
@@ -415,18 +444,26 @@ public class ScriptLogWindowsApplication extends javax.swing.JFrame {
     private javax.swing.JPopupMenu.Separator jSeparator7;
     private javax.swing.JToolBar jToolBar1;
     private javax.swing.JMenuBar menuBar;
-    private javax.swing.JMenuItem openMenuItem;
     private javax.swing.JMenuItem pasteMenuItem;
     private javax.swing.JMenuItem printMenuItem;
     private javax.swing.JMenuItem printerSetupMenuItem;
+    private javax.swing.JMenuItem settingsSettingsMenuItem;
     // End of variables declaration//GEN-END:variables
 
-    private void newLog() {
-        NewJInternalFrame njif = new NewJInternalFrame();
-        jDesktopPane1.add(njif, JLayeredPane.MODAL_LAYER);
-        FrameCenterer.center(njif);
-        njif.setVisible(true);
-        njif.addPropertyChangeListener("OK_PRESSED", new ScriptLogStarter());
+    private void openNewLogFrame() {
+        NewLogFrame nlf = new NewLogFrame();
+        jDesktopPane1.add(nlf, JLayeredPane.MODAL_LAYER);
+        FrameCenterer.center(nlf);
+        nlf.setVisible(true);
+        nlf.addPropertyChangeListener("OK_PRESSED", new ScriptLogStarter());
+    }
+
+    private void openSettingsFrame() {
+        SettingsFrame sef = new SettingsFrame();
+        jDesktopPane1.add(sef, JLayeredPane.MODAL_LAYER);
+        FrameCenterer.center(sef);
+        sef.setVisible(true);
+        sef.addPropertyChangeListener("OK_PRESSED", new SettingsChanger());
     }
 
 }
