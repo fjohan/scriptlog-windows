@@ -395,9 +395,9 @@ public class NewLogFrame extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_okButtonActionPerformed
 
     private void okButtonKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_okButtonKeyReleased
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            okPressed();
-        }
+        //if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+        //    okPressed();
+        //}
     }//GEN-LAST:event_okButtonKeyReleased
 
     private void eraseButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eraseButtonActionPerformed

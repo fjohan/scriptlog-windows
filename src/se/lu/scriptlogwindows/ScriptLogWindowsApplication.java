@@ -12,6 +12,7 @@ public class ScriptLogWindowsApplication extends javax.swing.JFrame {
 
     private static Maf maf;
     private boolean makeVisibleAtStartup;
+    ScriptLogStarter sl;
 
     /**
      * Creates new form ScriptLogWindowsApplication
@@ -227,6 +228,11 @@ public class ScriptLogWindowsApplication extends javax.swing.JFrame {
         jMenu1.add(jMenuItem15);
 
         jMenuItem16.setText("Stop");
+        jMenuItem16.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem16ActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuItem16);
 
         jMenuItem17.setText("Pause");
@@ -330,7 +336,7 @@ public class ScriptLogWindowsApplication extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem13ActionPerformed
 
     private void jMenuItem14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem14ActionPerformed
-        // TODO add your handling code here:
+        sl.start();
     }//GEN-LAST:event_jMenuItem14ActionPerformed
 
     private void fileNewMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fileNewMenuItemActionPerformed
@@ -341,8 +347,8 @@ public class ScriptLogWindowsApplication extends javax.swing.JFrame {
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
         if (!makeVisibleAtStartup) {
             maf.setVisible(true);
-            //openNewLogFrame();
-            openSettingsFrame();
+            openNewLogFrame();
+            //openSettingsFrame();
             makeVisibleAtStartup = true;
         }
 
@@ -357,6 +363,10 @@ public class ScriptLogWindowsApplication extends javax.swing.JFrame {
     private void settingsSettingsMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_settingsSettingsMenuItemActionPerformed
         openSettingsFrame();
     }//GEN-LAST:event_settingsSettingsMenuItemActionPerformed
+
+    private void jMenuItem16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem16ActionPerformed
+        sl.stop();
+    }//GEN-LAST:event_jMenuItem16ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -449,13 +459,13 @@ public class ScriptLogWindowsApplication extends javax.swing.JFrame {
     private javax.swing.JMenuItem printerSetupMenuItem;
     private javax.swing.JMenuItem settingsSettingsMenuItem;
     // End of variables declaration//GEN-END:variables
-
+    
     private void openNewLogFrame() {
         NewLogFrame nlf = new NewLogFrame();
         jDesktopPane1.add(nlf, JLayeredPane.MODAL_LAYER);
         FrameCenterer.center(nlf);
         nlf.setVisible(true);
-        nlf.addPropertyChangeListener("OK_PRESSED", new ScriptLogStarter());
+        nlf.addPropertyChangeListener("OK_PRESSED", sl = new ScriptLogStarter(jDesktopPane1));
     }
 
     private void openSettingsFrame() {
