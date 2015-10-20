@@ -5,6 +5,8 @@
  */
 package se.lu.scriptlogwindows;
 
+import java.awt.event.KeyEvent;
+
 /**
  *
  * @author ling-jfr
@@ -153,7 +155,7 @@ public class NewJInternalFrame extends javax.swing.JInternalFrame {
                             .addComponent(faNameTextField)
                             .addComponent(jLabel3)
                             .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(30, Short.MAX_VALUE))
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -175,7 +177,7 @@ public class NewJInternalFrame extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(ageTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(27, Short.MAX_VALUE))
+                .addContainerGap(30, Short.MAX_VALUE))
         );
 
         jLabel9.setText("Other Info");
@@ -236,7 +238,7 @@ public class NewJInternalFrame extends javax.swing.JInternalFrame {
                     .addComponent(jLabel7)
                     .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(28, Short.MAX_VALUE))
+                .addContainerGap(30, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -249,7 +251,7 @@ public class NewJInternalFrame extends javax.swing.JInternalFrame {
                 .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jButton5)
-                .addContainerGap(90, Short.MAX_VALUE))
+                .addContainerGap(93, Short.MAX_VALUE))
         );
 
         jLabel10.setText("Other Info");
@@ -307,6 +309,11 @@ public class NewJInternalFrame extends javax.swing.JInternalFrame {
         okButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 okButtonActionPerformed(evt);
+            }
+        });
+        okButton.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                okButtonKeyReleased(evt);
             }
         });
 
@@ -380,15 +387,14 @@ public class NewJInternalFrame extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_fRadioButtonActionPerformed
 
     private void okButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okButtonActionPerformed
-        firePropertyChange("OK_PRESSED", false, new ScriptLogInfo(
-                fiNameTextField.getText(),
-                faNameTextField.getText(),
-                ageTextField.getText().length(),
-                mRadioButton.isSelected(),
-                fRadioButton.isSelected()
-        ));
-        this.dispose();
+        okPressed();
     }//GEN-LAST:event_okButtonActionPerformed
+
+    private void okButtonKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_okButtonKeyReleased
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            okPressed();
+        }
+    }//GEN-LAST:event_okButtonKeyReleased
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -438,6 +444,17 @@ public class NewJInternalFrame extends javax.swing.JInternalFrame {
         } else {
             okButton.setEnabled(false);
         }
+    }
+
+    private void okPressed() {
+        firePropertyChange("OK_PRESSED", false, new ScriptLogInfo(
+                fiNameTextField.getText(),
+                faNameTextField.getText(),
+                ageTextField.getText(),
+                mRadioButton.isSelected(),
+                fRadioButton.isSelected()
+        ));
+        dispose();
     }
 
 }

@@ -6,7 +6,6 @@
 package se.lu.scriptlogwindows;
 
 import java.awt.Rectangle;
-import java.beans.PropertyChangeListener;
 import javax.swing.JLayeredPane;
 
 /**
@@ -325,7 +324,7 @@ public class ScriptLogWindowsApplication extends javax.swing.JFrame {
 
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
         maf.setVisible(true);
-        newLog();
+        //newLog();
     }//GEN-LAST:event_formWindowActivated
 
     private void jDesktopPane1ComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_jDesktopPane1ComponentResized

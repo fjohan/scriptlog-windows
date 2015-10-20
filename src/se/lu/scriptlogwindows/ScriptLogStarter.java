@@ -20,7 +20,7 @@ class ScriptLogStarter implements PropertyChangeListener {
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         ScriptLogInfo sli = (ScriptLogInfo) evt.getNewValue();
-        Maf.println("Starting..." + sli.getfText());
+        Maf.println("Starting..." + sli.getfText() + ", " + sli.getfText0() + ", " + sli.getfText1() + ", " + sli.isfSelected() + ", " + sli.isfSelected0());
     }
     
 }

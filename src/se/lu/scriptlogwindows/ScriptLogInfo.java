@@ -13,14 +13,14 @@ class ScriptLogInfo {
 
     private final String fText;
     private final String fText0;
-    private final int fLength;
+    private final String fText1;
     private final boolean fSelected;
     private final boolean fSelected0;
 
-    public ScriptLogInfo(String text, String text0, int length, boolean selected, boolean selected0) {
+    public ScriptLogInfo(String text, String text0, String text1, boolean selected, boolean selected0) {
         fText = text;
         fText0 = text0;
-        fLength = length;
+        fText1 = text1;
         fSelected = selected;
         fSelected0 = selected0;
     }
@@ -42,8 +42,8 @@ class ScriptLogInfo {
     /**
      * @return the fLength
      */
-    public int getfLength() {
-        return fLength;
+    public String getfText1() {
+        return fText1;
     }
 
     /**
