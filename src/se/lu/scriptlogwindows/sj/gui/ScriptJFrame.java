@@ -89,8 +89,8 @@ public class ScriptJFrame extends javax.swing.JInternalFrame {
     private javax.swing.JTextPane jTextPane1;
     // End of variables declaration//GEN-END:variables
 
-    public void record() {
-        sjLogger.record();
+    public void record(String sessionName) {
+        sjLogger.record(sessionName);
         firePropertyChange("PROP_SJLOGGING", Boolean.FALSE, Boolean.TRUE);
     }
 

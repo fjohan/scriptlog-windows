@@ -10,6 +10,7 @@ import java.io.File;
 import java.util.prefs.Preferences;
 import javax.swing.JFileChooser;
 import se.lu.scriptlogwindows.directorykeeper.DirectoryKeeper;
+import se.lu.scriptlogwindows.util.ScriptLogConstants;
 
 /**
  *
@@ -343,9 +344,15 @@ public class SettingsFrame extends javax.swing.JInternalFrame {
     }
 
     private void okPressed() {
+
+        String newWd = getWorkingDir();
+        if (!newWd.endsWith(ScriptLogConstants.FILE_SEPARATOR)) {
+            newWd = newWd + ScriptLogConstants.FILE_SEPARATOR;
+        }
+
         if (checkWorkingDir()) {
             firePropertyChange("OK_PRESSED", false, new SettingsInfo(
-                    getWorkingDir()
+                    newWd
             ));
             dispose();
         }

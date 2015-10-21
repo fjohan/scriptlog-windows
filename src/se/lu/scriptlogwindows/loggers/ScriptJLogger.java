@@ -241,7 +241,7 @@ public class ScriptJLogger {
 
     }
 
-    public void record() {
+    public void record(String sessionName) {
         if (isLOGGING_ON()) return;
         setLOGGING_ON(true);
         fJtp.setEditable(true);
@@ -256,7 +256,7 @@ public class ScriptJLogger {
         fJsp.getViewport().addChangeListener(changeL);
 
         bQueue = new LinkedBlockingQueue<Recordable>();
-        recordableConsumer = new RecordableXMLWriter(bQueue);
+        recordableConsumer = new RecordableXMLWriter(bQueue, sessionName);
         producerExec = Executors.newScheduledThreadPool(1);
         consumerExec = Executors.newCachedThreadPool();
 

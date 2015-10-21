@@ -3,6 +3,8 @@ package se.lu.scriptlogwindows.loggers;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.concurrent.BlockingQueue;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -12,6 +14,7 @@ import javax.xml.stream.XMLStreamWriter;
 import se.lu.scriptlogwindows.Maf;
 import se.lu.scriptlogwindows.directorykeeper.DirectoryKeeper;
 import se.lu.scriptlogwindows.recordable.Recordable;
+import se.lu.scriptlogwindows.util.ScriptLogConstants;
 
 /**
  *
@@ -22,11 +25,13 @@ public class RecordableXMLWriter implements Runnable {
     File tmpFile;
     XMLStreamWriter writer;
     Recordable currentR;
+    String fSessionName;
 
     protected BlockingQueue<Recordable> fBQueue;
 
-    public RecordableXMLWriter(BlockingQueue aBQueue) {
+    public RecordableXMLWriter(BlockingQueue aBQueue, String aSessionName) {
         fBQueue = aBQueue;
+        fSessionName = aSessionName;
     }
 
     @Override
@@ -35,18 +40,18 @@ public class RecordableXMLWriter implements Runnable {
 
         try {
             try {
-                
-                tmpFile = File.createTempFile("ScriptJ", ".tmp",
+
+                String tmpString = mkFileName();
+                if (tmpString.matches("-1")) {
+                    tmpFile = File.createTempFile("ScriptLog", ".tmp",
                         new File(DirectoryKeeper.INSTANCE.getPrefs().get("workingDir", null)));
-                
-//                tmpFile = File.createTempFile("ScriptJ", ".tmp");
-                tmpFile.deleteOnExit();
-                
-                
-                
+                } else {
+                    tmpFile = new File(tmpString);
+                }
+                //tmpFile.deleteOnExit();
+
                 //Lazy
-                                
-                Maf.println("Temp file : " + tmpFile.getAbsolutePath());
+                Maf.println("Writing to file: " + tmpFile.getAbsolutePath());
 
                 writer = factory.createXMLStreamWriter(new FileWriter(tmpFile, false));
                 writer.writeStartDocument("1.0");
@@ -84,4 +89,75 @@ public class RecordableXMLWriter implements Runnable {
         }
 
     }
+
+    private String mkFileName() {
+
+        String workingDirectory = DirectoryKeeper.INSTANCE.getPrefs().get("workingDir", "unset");
+        if (workingDirectory.matches("unset")) {
+            Maf.println("Working directory not set!");
+            return "-1";
+        }
+
+        File testFile;
+        String storingDir;
+
+        // this is a trick - exp_dir is the default but we want to increment
+        // that so we start from 1 in dirs - just of convenience
+        // we increment the date following to keep one top dir - easy for deleting
+        if ("exp_subj".equals(fSessionName)) {
+            int versionNumber = 1;
+            String s = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+            storingDir = workingDirectory
+                    + "exp_subj"
+                    + ScriptLogConstants.FILE_SEPARATOR
+                    + s + "_" + versionNumber
+                    + ScriptLogConstants.FILE_SEPARATOR;
+            testFile = new File(storingDir);
+            while (testFile.isDirectory()) {
+                versionNumber = versionNumber + 1;
+                storingDir = workingDirectory
+                        + "exp_subj"
+                        + ScriptLogConstants.FILE_SEPARATOR
+                        + s + "_" + versionNumber
+                        + ScriptLogConstants.FILE_SEPARATOR;
+                testFile = new File(storingDir);
+            }
+        } else {
+            String simpleDate = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+            storingDir = workingDirectory
+                    + fSessionName
+                    + ScriptLogConstants.FILE_SEPARATOR
+                    + simpleDate
+                    + ScriptLogConstants.FILE_SEPARATOR;
+            testFile = new File(storingDir);
+        }
+        if (!testFile.canWrite()) {
+            if (!testFile.mkdirs()) {
+                Maf.println("Can not write or create directory: " + storingDir + ". Please select another.");
+                return "-1";
+            }
+        }
+        DirectoryKeeper.INSTANCE.getPrefs().put(ScriptLogConstants.STORING_DIR, storingDir);
+        
+        
+                int versionNumber = 1;
+        String autosaveFilename = storingDir + fSessionName + "_sl_" + versionNumber + ".sdfx";
+        testFile = new File(autosaveFilename);
+        while (testFile.exists()) {
+            versionNumber = versionNumber + 1;
+            autosaveFilename = storingDir + fSessionName + "_sl_" + versionNumber + ".sdfx";
+            testFile = new File(autosaveFilename);
+        }
+        return autosaveFilename;
+
+
+//        filePrefix = globalExperimentName
+//                + globalConditionName
+//                + globalSubjectName
+//                + setupShortName;
+//        if (aNotifyFrames) {
+//            setUNIQUE_DIR_CREATED(System.nanoTime());
+//        }
+    }
+
 }

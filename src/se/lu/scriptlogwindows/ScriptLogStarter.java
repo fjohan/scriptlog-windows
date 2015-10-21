@@ -14,6 +14,7 @@ class ScriptLogStarter implements PropertyChangeListener {
 
     JDesktopPane fJdp;
     ScriptJFrame sjf;
+    String sessionName;
 
     ScriptLogStarter(JDesktopPane jDesktopPane1) {
         fJdp = jDesktopPane1;
@@ -22,6 +23,7 @@ class ScriptLogStarter implements PropertyChangeListener {
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         ScriptLogInfo sli = (ScriptLogInfo) evt.getNewValue();
+        sessionName = sli.getfText() + "_" + sli.getfText0();
         Maf.println("Starting..." + sli.getfText()
                 + ", " + sli.getfText0()
                 + ", " + sli.getfText1()
@@ -34,7 +36,6 @@ class ScriptLogStarter implements PropertyChangeListener {
 
     private void newLog() {
         sjf = new ScriptJFrame();
-        //((javax.swing.plaf.basic.BasicInternalFrameUI) sjf.getUI()).setNorthPane(null);
 
         //alSjf.add(sjf);
         //sjf.setTitle("ScriptJ - Frame " + alSjf.size());
@@ -45,14 +46,18 @@ class ScriptLogStarter implements PropertyChangeListener {
         //sjf.addPropertyChangeListener("PROP_SJLOGGING", new JLabel1Changer(jLabel1));
     }
 
-    void start() {
+    public void start() {
         Maf.println("Starting for real!");
-        sjf.record();
+        sjf.record(sessionName);
     }
 
-    void stop() {
+    public void stop() {
         Maf.println("Stopping!");
         sjf.stop();
+    }
+
+    void close() {
+        sjf.dispose();
     }
 
 }
