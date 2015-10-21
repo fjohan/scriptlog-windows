@@ -4,7 +4,6 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import javax.swing.JDesktopPane;
 import javax.swing.JLayeredPane;
-import se.lu.scriptlogwindows.sj.JLabel1Changer;
 import se.lu.scriptlogwindows.sj.gui.ScriptJFrame;
 
 /**

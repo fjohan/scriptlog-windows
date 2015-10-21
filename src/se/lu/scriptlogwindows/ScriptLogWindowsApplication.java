@@ -96,6 +96,9 @@ public class ScriptLogWindowsApplication extends javax.swing.JFrame {
 
         jMenuItem11.setText("jMenuItem11");
 
+        jToolBar1.setFloatable(false);
+        jToolBar1.setRollover(true);
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setExtendedState(MAXIMIZED_BOTH);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -103,9 +106,6 @@ public class ScriptLogWindowsApplication extends javax.swing.JFrame {
                 formWindowActivated(evt);
             }
         });
-
-        jToolBar1.setFloatable(false);
-        jToolBar1.setRollover(true);
 
         jDesktopPane1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jDesktopPane1.addComponentListener(new java.awt.event.ComponentAdapter() {
@@ -313,14 +313,12 @@ public class ScriptLogWindowsApplication extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jDesktopPane1)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(31, 31, 31)
                 .addComponent(jDesktopPane1))
         );
 
@@ -347,7 +345,8 @@ public class ScriptLogWindowsApplication extends javax.swing.JFrame {
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
         if (!makeVisibleAtStartup) {
             maf.setVisible(true);
-            openNewLogFrame();
+            //openNewLogFrame();
+            openJIF();
             //openSettingsFrame();
             makeVisibleAtStartup = true;
         }
@@ -459,7 +458,7 @@ public class ScriptLogWindowsApplication extends javax.swing.JFrame {
     private javax.swing.JMenuItem printerSetupMenuItem;
     private javax.swing.JMenuItem settingsSettingsMenuItem;
     // End of variables declaration//GEN-END:variables
-    
+
     private void openNewLogFrame() {
         NewLogFrame nlf = new NewLogFrame();
         jDesktopPane1.add(nlf, JLayeredPane.MODAL_LAYER);
@@ -474,6 +473,19 @@ public class ScriptLogWindowsApplication extends javax.swing.JFrame {
         FrameCenterer.center(sef);
         sef.setVisible(true);
         sef.addPropertyChangeListener("OK_PRESSED", new SettingsChanger());
+    }
+
+    private void openJIF() {
+        //NewJInternalFrame njif = new NewJInternalFrame();
+        //jDesktopPane1.add(njif, JLayeredPane.MODAL_LAYER);
+        //FrameCenterer.center(njp);
+        //njif.setVisible(true);
+        //sef.addPropertyChangeListener("OK_PRESSED", new SettingsChanger());
+
+        NewJPanel njp = new NewJPanel();
+        jDesktopPane1.add(njp, JLayeredPane.MODAL_LAYER);
+        njp.setBounds(200, 200, 400, 200);
+        njp.setVisible(true);
     }
 
 }

@@ -91,7 +91,7 @@ public enum DirectoryKeeper {
         if (workingDirectory.matches("unset")) {
             final Preferences systemPrefs = Preferences.systemNodeForPackage(getClass());
             String globalWorkingDir = systemPrefs.get("workingDir", "unset");
-            System.out.println(globalWorkingDir);
+            //System.out.println(globalWorkingDir);
             if (!globalWorkingDir.matches("unset")) {
                 prefs.put("workingDir", globalWorkingDir);
             }

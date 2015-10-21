@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package se.lu.scriptlogwindows.loggers;
 
 import java.io.File;
@@ -15,6 +10,7 @@ import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
 import se.lu.scriptlogwindows.Maf;
+import se.lu.scriptlogwindows.directorykeeper.DirectoryKeeper;
 import se.lu.scriptlogwindows.recordable.Recordable;
 
 /**
@@ -40,8 +36,13 @@ public class RecordableXMLWriter implements Runnable {
         try {
             try {
                 
-                tmpFile = File.createTempFile("ScriptJ", ".tmp");
+                tmpFile = File.createTempFile("ScriptJ", ".tmp",
+                        new File(DirectoryKeeper.INSTANCE.getPrefs().get("workingDir", null)));
+                
+//                tmpFile = File.createTempFile("ScriptJ", ".tmp");
                 tmpFile.deleteOnExit();
+                
+                
                 
                 //Lazy
                                 
