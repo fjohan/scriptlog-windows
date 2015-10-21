@@ -14,9 +14,9 @@ class ScriptLogStarter implements PropertyChangeListener {
 
     JDesktopPane fJdp;
     ScriptJFrame sjf;
-    
+
     ScriptLogStarter(JDesktopPane jDesktopPane1) {
-        fJdp=jDesktopPane1;
+        fJdp = jDesktopPane1;
     }
 
     @Override
@@ -34,13 +34,15 @@ class ScriptLogStarter implements PropertyChangeListener {
 
     private void newLog() {
         sjf = new ScriptJFrame();
+        //((javax.swing.plaf.basic.BasicInternalFrameUI) sjf.getUI()).setNorthPane(null);
+
         //alSjf.add(sjf);
         //sjf.setTitle("ScriptJ - Frame " + alSjf.size());
         fJdp.add(sjf, JLayeredPane.DEFAULT_LAYER);
+        FrameCenterer.center(sjf);
         sjf.setVisible(true);
 
         //sjf.addPropertyChangeListener("PROP_SJLOGGING", new JLabel1Changer(jLabel1));
-
     }
 
     void start() {

@@ -20,6 +20,7 @@ public class ScriptJFrame extends javax.swing.JInternalFrame {
      */
     public ScriptJFrame() {
         initComponents();
+        ((javax.swing.plaf.basic.BasicInternalFrameUI) this.getUI()).setNorthPane(null);
 
         //setTitle("ScriptLogFrame");
         // we could of course get the textpane from the scrollpane
@@ -37,14 +38,9 @@ public class ScriptJFrame extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        outerPanel = new javax.swing.JPanel();
-        innerPanel = new javax.swing.JPanel();
         jTextPane1 = new javax.swing.JTextPane();
 
-        setClosable(true);
-        setIconifiable(true);
-        setMaximizable(true);
-        setResizable(true);
+        setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
             public void internalFrameOpened(javax.swing.event.InternalFrameEvent evt) {
             }
@@ -66,56 +62,18 @@ public class ScriptJFrame extends javax.swing.JInternalFrame {
         jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         jScrollPane1.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 
-        innerPanel.setBackground(new java.awt.Color(255, 255, 255));
-        innerPanel.setForeground(new java.awt.Color(255, 255, 255));
-
         jTextPane1.setEditable(false);
-
-        javax.swing.GroupLayout innerPanelLayout = new javax.swing.GroupLayout(innerPanel);
-        innerPanel.setLayout(innerPanelLayout);
-        innerPanelLayout.setHorizontalGroup(
-            innerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(innerPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jTextPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 328, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        innerPanelLayout.setVerticalGroup(
-            innerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(innerPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jTextPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 223, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-
-        javax.swing.GroupLayout outerPanelLayout = new javax.swing.GroupLayout(outerPanel);
-        outerPanel.setLayout(outerPanelLayout);
-        outerPanelLayout.setHorizontalGroup(
-            outerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(outerPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(innerPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        outerPanelLayout.setVerticalGroup(
-            outerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(outerPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(innerPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-
-        jScrollPane1.setViewportView(outerPanel);
+        jScrollPane1.setViewportView(jTextPane1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 402, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 282, Short.MAX_VALUE)
         );
 
         pack();
@@ -127,10 +85,8 @@ public class ScriptJFrame extends javax.swing.JInternalFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel innerPanel;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextPane jTextPane1;
-    private javax.swing.JPanel outerPanel;
     // End of variables declaration//GEN-END:variables
 
     public void record() {

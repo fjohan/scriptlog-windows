@@ -1,7 +1,5 @@
 package se.lu.scriptlogwindows;
 
-import java.awt.event.KeyEvent;
-
 /**
  *
  * @author ling-jfr
@@ -398,6 +396,7 @@ public class NewLogFrame extends javax.swing.JInternalFrame {
         //if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
         //    okPressed();
         //}
+        //okButton.doClick();
     }//GEN-LAST:event_okButtonKeyReleased
 
     private void eraseButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eraseButtonActionPerformed
