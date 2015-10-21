@@ -10,6 +10,7 @@ import se.lu.scriptlogwindows.directorykeeper.DirectoryKeeper;
  */
 public class ScriptLogWindowsApplication extends javax.swing.JFrame {
 
+    // comment
     private static Maf maf;
     private boolean makeVisibleAtStartup;
     ScriptLogStarter sl;
