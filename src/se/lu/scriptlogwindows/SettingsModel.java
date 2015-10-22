@@ -16,9 +16,6 @@ class SettingsModel {
     private TestType testType;
     private boolean emulateEyesUsingMouse;
 
-//    public SettingsModel(String workingDir) {
-//        workingDir = workingDir;
-//    }
     public SettingsModel() {
     }
 
@@ -133,13 +130,14 @@ class SettingsModel {
             try {
                 //requires access to private field:
                 //result.append(field.get(this)).append(" ");
-                result.append(field.get(this)).append("\t");
+                result.append(field.get(this)).append(",");
             } catch (IllegalArgumentException ex) {
                 Logger.getLogger(SettingsModel.class.getName()).log(Level.SEVERE, null, ex);
             } catch (IllegalAccessException ex) {
                 Logger.getLogger(SettingsModel.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+        result.append(getTestType().getfTestTypeName());
 
         return result.toString();
     }

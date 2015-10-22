@@ -15,7 +15,7 @@ public class ScriptLogWindowsApplication extends javax.swing.JFrame {
     private static Maf maf;
     private boolean makeVisibleAtStartup;
     private ScriptLogStarter sl;
-    private ScriptLogModel slm;
+    //private ScriptLogModel slm = new ScriptLogModel();
 
     /**
      * Creates new form ScriptLogWindowsApplication
@@ -126,7 +126,7 @@ public class ScriptLogWindowsApplication extends javax.swing.JFrame {
         );
         jDesktopPane1Layout.setVerticalGroup(
             jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 263, Short.MAX_VALUE)
+            .addGap(0, 255, Short.MAX_VALUE)
         );
 
         fileMenu.setMnemonic('f');
@@ -284,6 +284,7 @@ public class ScriptLogWindowsApplication extends javax.swing.JFrame {
         jMenuItem10.setText("EyeTrack Configuration...");
         jMenu2.add(jMenuItem10);
 
+        settingsSettingsMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_T, java.awt.event.InputEvent.CTRL_MASK));
         settingsSettingsMenuItem.setText("Settings...");
         settingsSettingsMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -323,7 +324,7 @@ public class ScriptLogWindowsApplication extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jDesktopPane1)
-            .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 394, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -333,8 +334,8 @@ public class ScriptLogWindowsApplication extends javax.swing.JFrame {
                 .addComponent(jDesktopPane1))
         );
 
-        setSize(new java.awt.Dimension(410, 349));
-        setLocationRelativeTo(null);
+        java.awt.Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
+        setBounds((screenSize.width-410)/2, (screenSize.height-349)/2, 410, 349);
     }// </editor-fold>//GEN-END:initComponents
 
     private void exitMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitMenuItemActionPerformed
@@ -489,11 +490,17 @@ public class ScriptLogWindowsApplication extends javax.swing.JFrame {
         jDesktopPane1.add(sef, JLayeredPane.MODAL_LAYER);
         FrameCenterer.center(sef);
         sef.setVisible(true);
-        sef.addPropertyChangeListener("OK_PRESSED", new SettingsChanger());
+        //sef.addPropertyChangeListener("OK_PRESSED", new SettingsChanger());
+        sef.addPropertyChangeListener("OK_PRESSED", settingsChanger());
     }
 
     private PropertyChangeListener mmethod() {
         return new ScriptLogStarter(jDesktopPane1);
+    }
+
+    private PropertyChangeListener settingsChanger() {
+        SettingsChanger sc = new SettingsChanger();
+        return sc;
     }
 
 }

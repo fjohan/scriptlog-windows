@@ -10,14 +10,13 @@ import se.lu.scriptlogwindows.Maf;
 /**
  *
  * @author johanf
- * 
+ *
  * This keeps all preferences in one class instead of spreading them out.
  * Currently implemented as a singleton.
  */
 public enum SettingsKeeper {
 
     INSTANCE;
-
     private final Map directoryMap = new HashMap();
     private final Preferences prefs = Preferences.userNodeForPackage(getClass());
 
@@ -48,7 +47,7 @@ public enum SettingsKeeper {
         for (String s : directoryArray) {
             getDirectoryMap().put(s, prefs.get(s, wd));
         }
-        
+
         getDirectoryMap().put("defaultLanguageInit", prefs.get("defaultLanguage", "0"));
     }
 
@@ -78,7 +77,6 @@ public enum SettingsKeeper {
     public void initWorkingDir() {
         setup();
         Preferences prefs = getPrefs();
-
         // lin: /etc/.java
         // win: HKEY_LOCAL_MACHINE
         // mac: ???
@@ -87,6 +85,12 @@ public enum SettingsKeeper {
         //systemRoot's fully qualified
         //package name is java.util.prefs. 
         //prefs.remove("workingDir");
+//        try {
+//            prefs.removeNode();
+//        } catch (BackingStoreException ex) {
+//            Logger.getLogger(SettingsKeeper.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+
         String workingDirectory = prefs.get("workingDir", "unset");
 
         // global property set?
@@ -137,5 +141,4 @@ public enum SettingsKeeper {
             //openSettingsWindow(workingDirectory);
         }
     }
-
 }

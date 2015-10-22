@@ -2,7 +2,7 @@ package se.lu.scriptlogwindows.util;
 
 /**
  * Collected constants of very general utility.
- * 
+ *
  * <P> All constants are immutable.
  */
 public final class ScriptLogConstants {
@@ -11,6 +11,12 @@ public final class ScriptLogConstants {
     public static final String NEW_LINE = "\n";
     public static final String FILE_SEPARATOR = System.getProperty("file.separator");
     
+    //Settings Strings
+    public static final String SETTINGS_WORKING_DIR = "workingDir";
+    public static final String SETTINGS_DEFAULT_LANGUAGE = "defaultLanguage";
+    public static final String SETTINGS_SHOW_TIME_IN = "showTimeIn";
+    public static final String SETTINGS_TEST_TYPE = "testType";
+    public static final String SETTINGS_MOUSE_EMUL_EYES = "mouseEmulEyes";
 //    //Log header Strings
 //    public static final String VERSION = "Version";
 //    public static final String INITIAL_TEXT = "initialText";
@@ -43,7 +49,7 @@ public final class ScriptLogConstants {
 //    public static final String TRIPLE_TASK_DIALOG_NAME = "TripleTaskDialog";
 //    
 //    public static final String TEXT_LANGUAGE = "textLanguage";
-    
+
     // PRIVATE //
     /**
      * Prevent object construction.

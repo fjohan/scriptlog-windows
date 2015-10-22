@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package se.lu.scriptlogwindows;
 
 import java.awt.Color;
@@ -27,22 +22,20 @@ public class SettingsFrame extends javax.swing.JInternalFrame {
     public SettingsFrame() {
         SettingsKeeper sk = SettingsKeeper.INSTANCE;
         Preferences prefs = sk.getPrefs();
-        settingsModel.setWorkingDir(prefs.get("workingDir", "unset"));
-
-        // TODO: implement initialising from prefs later
-        //settingsModel.setDefaultLanguage(prefs.get("defaultLanguage", "0"));
+        settingsModel.setWorkingDir(prefs.get(ScriptLogConstants.SETTINGS_WORKING_DIR, "unset"));
+        settingsModel.setDefaultLanguage(
+                prefs.get(ScriptLogConstants.SETTINGS_DEFAULT_LANGUAGE, "Swedish"));
+        settingsModel.setShowTimeIn(Integer.parseInt(
+                prefs.get(ScriptLogConstants.SETTINGS_SHOW_TIME_IN, "0")));
+        settingsModel.setTestType(null);
+        settingsModel.setEmulateEyesUsingMouse(Boolean.parseBoolean(
+                prefs.get(ScriptLogConstants.SETTINGS_MOUSE_EMUL_EYES, "True")));
         initComponents();
         workingDirTextField.setText(settingsModel.getWorkingDir());
-        defaultLanguageComboBox.setSelectedIndex(0);
-        showTimeInComboBox.setSelectedIndex(0);
+        defaultLanguageComboBox.setSelectedItem(settingsModel.getDefaultLanguage());
+        showTimeInComboBox.setSelectedIndex(settingsModel.getShowTimeIn());
         testTypeList.setSelectedIndex(0);
-        emulateUsingMouseCheckBox.setSelected(true);
-
-        settingsModel.setDefaultLanguage(defaultLanguageComboBox.getSelectedItem().toString());
-        settingsModel.setShowTimeIn(showTimeInComboBox.getSelectedIndex());
-        settingsModel.setTestType(new TestType());
-        settingsModel.setEmulateEyesUsingMouse(emulateUsingMouseCheckBox.isSelected());
-
+        emulateUsingMouseCheckBox.setSelected(settingsModel.isEmulateEyesUsingMouse());
     }
 
     /**
@@ -92,11 +85,11 @@ public class SettingsFrame extends javax.swing.JInternalFrame {
             }
         });
 
-        defaultLanguageComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Swedish" }));
+        defaultLanguageComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Swedish", "English", "Dutch", "French" }));
 
         jLabel2.setText("Choose the Default Language");
 
-        showTimeInComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "sec.millisec", "min.sec.millisec", " " }));
+        showTimeInComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "sec.millisec", "min.sec.millisec" }));
 
         jLabel3.setText("Show Time in:");
 
@@ -112,7 +105,7 @@ public class SettingsFrame extends javax.swing.JInternalFrame {
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(workingDirTextField)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addGap(0, 2, Short.MAX_VALUE)
+                        .addGap(0, 105, Short.MAX_VALUE)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -147,7 +140,7 @@ public class SettingsFrame extends javax.swing.JInternalFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(showTimeInComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3))
-                .addContainerGap(49, Short.MAX_VALUE))
+                .addContainerGap(63, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("General", jPanel2);
@@ -155,7 +148,7 @@ public class SettingsFrame extends javax.swing.JInternalFrame {
         jLabel4.setText("Select Test Type");
 
         testTypeList.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = { "Plain" };
+            String[] strings = { "Plain", "Frog_stories", "School_setup" };
             public int getSize() { return strings.length; }
             public Object getElementAt(int i) { return strings[i]; }
         });
@@ -198,7 +191,7 @@ public class SettingsFrame extends javax.swing.JInternalFrame {
                         .addComponent(jButton6)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton7)))
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addContainerGap(34, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Select Test Type", jPanel3);
@@ -213,12 +206,12 @@ public class SettingsFrame extends javax.swing.JInternalFrame {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(emulateUsingMouseCheckBox)
-                .addContainerGap(205, Short.MAX_VALUE))
+                .addContainerGap(238, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addContainerGap(161, Short.MAX_VALUE)
+                .addContainerGap(165, Short.MAX_VALUE)
                 .addComponent(emulateUsingMouseCheckBox)
                 .addContainerGap())
         );
@@ -366,11 +359,12 @@ public class SettingsFrame extends javax.swing.JInternalFrame {
 
         if (checkWorkingDir()) {
             settingsModel.setWorkingDir(newWd);
+            settingsModel.setDefaultLanguage(defaultLanguageComboBox.getSelectedItem().toString());
+            settingsModel.setShowTimeIn(showTimeInComboBox.getSelectedIndex());
+            settingsModel.setTestType(TestType.parseTestType(
+                    testTypeList.getSelectedValue().toString()));
             settingsModel.setEmulateEyesUsingMouse(emulateUsingMouseCheckBox.isSelected());
             firePropertyChange("OK_PRESSED", false, settingsModel);
-//            firePropertyChange("OK_PRESSED", false, new SettingsModel(
-//                    newWd
-//            ));
             dispose();
         }
     }
