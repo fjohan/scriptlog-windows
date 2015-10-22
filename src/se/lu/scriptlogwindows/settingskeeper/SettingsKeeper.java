@@ -1,4 +1,4 @@
-package se.lu.scriptlogwindows.directorykeeper;
+package se.lu.scriptlogwindows.settingskeeper;
 
 import java.io.File;
 import java.util.HashMap;
@@ -14,7 +14,7 @@ import se.lu.scriptlogwindows.Maf;
  * This keeps all preferences in one class instead of spreading them out.
  * Currently implemented as a singleton.
  */
-public enum DirectoryKeeper {
+public enum SettingsKeeper {
 
     INSTANCE;
 
@@ -48,6 +48,8 @@ public enum DirectoryKeeper {
         for (String s : directoryArray) {
             getDirectoryMap().put(s, prefs.get(s, wd));
         }
+        
+        getDirectoryMap().put("defaultLanguageInit", prefs.get("defaultLanguage", "0"));
     }
 
     /**

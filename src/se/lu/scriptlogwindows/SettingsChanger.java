@@ -7,7 +7,7 @@ package se.lu.scriptlogwindows;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import se.lu.scriptlogwindows.directorykeeper.DirectoryKeeper;
+import se.lu.scriptlogwindows.settingskeeper.SettingsKeeper;
 
 /**
  *
@@ -20,10 +20,9 @@ class SettingsChanger implements PropertyChangeListener {
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        SettingsInfo sei = (SettingsInfo) evt.getNewValue();
-        Maf.println("Settings..." + sei.getfWorkingdir()
-        );
-        DirectoryKeeper.INSTANCE.updateDirectoryPreferences("workingDir", sei.getfWorkingdir());
+        SettingsModel sei = (SettingsModel) evt.getNewValue();
+        Maf.println("Settings..." + sei.toShortString());
+        SettingsKeeper.INSTANCE.updateDirectoryPreferences("workingDir", sei.getWorkingDir());
 
     }
 

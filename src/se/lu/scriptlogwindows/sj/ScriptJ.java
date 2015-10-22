@@ -35,7 +35,7 @@ public class ScriptJ {
 
     public void startRecording() {
         for (ScriptJFrame sjf : alSjf) {
-            sjf.record();
+//            sjf.record();
         }
     }
 

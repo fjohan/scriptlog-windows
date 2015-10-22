@@ -12,7 +12,7 @@ import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
 import se.lu.scriptlogwindows.Maf;
-import se.lu.scriptlogwindows.directorykeeper.DirectoryKeeper;
+import se.lu.scriptlogwindows.settingskeeper.SettingsKeeper;
 import se.lu.scriptlogwindows.recordable.Recordable;
 import se.lu.scriptlogwindows.util.ScriptLogConstants;
 
@@ -44,7 +44,7 @@ public class RecordableXMLWriter implements Runnable {
                 String tmpString = mkFileName();
                 if (tmpString.matches("-1")) {
                     tmpFile = File.createTempFile("ScriptLog", ".tmp",
-                        new File(DirectoryKeeper.INSTANCE.getPrefs().get("workingDir", null)));
+                        new File(SettingsKeeper.INSTANCE.getPrefs().get("workingDir", null)));
                 } else {
                     tmpFile = new File(tmpString);
                 }
@@ -92,7 +92,7 @@ public class RecordableXMLWriter implements Runnable {
 
     private String mkFileName() {
 
-        String workingDirectory = DirectoryKeeper.INSTANCE.getPrefs().get("workingDir", "unset");
+        String workingDirectory = SettingsKeeper.INSTANCE.getPrefs().get("workingDir", "unset");
         if (workingDirectory.matches("unset")) {
             Maf.println("Working directory not set!");
             return "-1";
@@ -137,7 +137,7 @@ public class RecordableXMLWriter implements Runnable {
                 return "-1";
             }
         }
-        DirectoryKeeper.INSTANCE.getPrefs().put(ScriptLogConstants.STORING_DIR, storingDir);
+        SettingsKeeper.INSTANCE.getPrefs().put(ScriptLogConstants.STORING_DIR, storingDir);
         
         
                 int versionNumber = 1;

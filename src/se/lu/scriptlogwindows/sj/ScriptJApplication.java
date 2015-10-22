@@ -371,7 +371,7 @@ public class ScriptJApplication extends javax.swing.JFrame {
 
     private void startRecording() {
         for (ScriptJFrame sjf : alSjf) {
-            sjf.record();
+//            sjf.record();
         }
     }
 

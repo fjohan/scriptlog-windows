@@ -9,7 +9,7 @@ import java.awt.Color;
 import java.io.File;
 import java.util.prefs.Preferences;
 import javax.swing.JFileChooser;
-import se.lu.scriptlogwindows.directorykeeper.DirectoryKeeper;
+import se.lu.scriptlogwindows.settingskeeper.SettingsKeeper;
 import se.lu.scriptlogwindows.util.ScriptLogConstants;
 
 /**
@@ -18,17 +18,31 @@ import se.lu.scriptlogwindows.util.ScriptLogConstants;
  */
 public class SettingsFrame extends javax.swing.JInternalFrame {
 
-    private final String workingDirectory;
+    //private final String workingDirectory;
+    SettingsModel settingsModel = new SettingsModel();
 
     /**
      * Creates new form SettingsFrame
      */
     public SettingsFrame() {
-        DirectoryKeeper dk = DirectoryKeeper.INSTANCE;
-        Preferences prefs = dk.getPrefs();
-        workingDirectory = prefs.get("workingDir", "unset");
+        SettingsKeeper sk = SettingsKeeper.INSTANCE;
+        Preferences prefs = sk.getPrefs();
+        settingsModel.setWorkingDir(prefs.get("workingDir", "unset"));
+
+        // TODO: implement initialising from prefs later
+        //settingsModel.setDefaultLanguage(prefs.get("defaultLanguage", "0"));
         initComponents();
-        workingDirTextField.setText(workingDirectory);
+        workingDirTextField.setText(settingsModel.getWorkingDir());
+        defaultLanguageComboBox.setSelectedIndex(0);
+        showTimeInComboBox.setSelectedIndex(0);
+        testTypeList.setSelectedIndex(0);
+        emulateUsingMouseCheckBox.setSelected(true);
+
+        settingsModel.setDefaultLanguage(defaultLanguageComboBox.getSelectedItem().toString());
+        settingsModel.setShowTimeIn(showTimeInComboBox.getSelectedIndex());
+        settingsModel.setTestType(new TestType());
+        settingsModel.setEmulateEyesUsingMouse(emulateUsingMouseCheckBox.isSelected());
+
     }
 
     /**
@@ -45,20 +59,20 @@ public class SettingsFrame extends javax.swing.JInternalFrame {
         jLabel1 = new javax.swing.JLabel();
         workingDirTextField = new javax.swing.JTextField();
         browseButton = new javax.swing.JButton();
-        jComboBox1 = new javax.swing.JComboBox();
+        defaultLanguageComboBox = new javax.swing.JComboBox();
         jLabel2 = new javax.swing.JLabel();
-        jComboBox2 = new javax.swing.JComboBox();
+        showTimeInComboBox = new javax.swing.JComboBox();
         jLabel3 = new javax.swing.JLabel();
         messageLabel = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList();
+        testTypeList = new javax.swing.JList();
         jButton5 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
         jButton7 = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
-        jCheckBox1 = new javax.swing.JCheckBox();
+        emulateUsingMouseCheckBox = new javax.swing.JCheckBox();
         jPanel1 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
@@ -78,11 +92,11 @@ public class SettingsFrame extends javax.swing.JInternalFrame {
             }
         });
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Swedish" }));
+        defaultLanguageComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Swedish" }));
 
         jLabel2.setText("Choose the Default Language");
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "sec.millisec", "min.sec.millisec", " " }));
+        showTimeInComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "sec.millisec", "min.sec.millisec", " " }));
 
         jLabel3.setText("Show Time in:");
 
@@ -106,8 +120,8 @@ public class SettingsFrame extends javax.swing.JInternalFrame {
                                     .addComponent(jLabel2))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jComboBox2, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                    .addComponent(defaultLanguageComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(showTimeInComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                                 .addComponent(messageLabel)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -127,11 +141,11 @@ public class SettingsFrame extends javax.swing.JInternalFrame {
                     .addComponent(messageLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(defaultLanguageComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(showTimeInComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3))
                 .addContainerGap(49, Short.MAX_VALUE))
         );
@@ -140,12 +154,12 @@ public class SettingsFrame extends javax.swing.JInternalFrame {
 
         jLabel4.setText("Select Test Type");
 
-        jList1.setModel(new javax.swing.AbstractListModel() {
+        testTypeList.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "Plain" };
             public int getSize() { return strings.length; }
             public Object getElementAt(int i) { return strings[i]; }
         });
-        jScrollPane1.setViewportView(jList1);
+        jScrollPane1.setViewportView(testTypeList);
 
         jButton5.setText("New");
 
@@ -189,8 +203,8 @@ public class SettingsFrame extends javax.swing.JInternalFrame {
 
         jTabbedPane1.addTab("Select Test Type", jPanel3);
 
-        jCheckBox1.setSelected(true);
-        jCheckBox1.setText("Emulate using mouse");
+        emulateUsingMouseCheckBox.setSelected(true);
+        emulateUsingMouseCheckBox.setText("Emulate using mouse");
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -198,14 +212,14 @@ public class SettingsFrame extends javax.swing.JInternalFrame {
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jCheckBox1)
+                .addComponent(emulateUsingMouseCheckBox)
                 .addContainerGap(205, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                 .addContainerGap(161, Short.MAX_VALUE)
-                .addComponent(jCheckBox1)
+                .addComponent(emulateUsingMouseCheckBox)
                 .addContainerGap())
         );
 
@@ -277,7 +291,7 @@ public class SettingsFrame extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_okButtonActionPerformed
 
     private void browseButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_browseButtonActionPerformed
-        JFileChooser chooser = new JFileChooser();
+        JFileChooser chooser = new JFileChooser(workingDirTextField.getText());
         chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
         int approval = chooser.showOpenDialog(this);
         if (approval == JFileChooser.APPROVE_OPTION) {
@@ -295,19 +309,17 @@ public class SettingsFrame extends javax.swing.JInternalFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton browseButton;
+    private javax.swing.JComboBox defaultLanguageComboBox;
+    private javax.swing.JCheckBox emulateUsingMouseCheckBox;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
-    private javax.swing.JCheckBox jCheckBox1;
-    private javax.swing.JComboBox jComboBox1;
-    private javax.swing.JComboBox jComboBox2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JList jList1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -316,6 +328,8 @@ public class SettingsFrame extends javax.swing.JInternalFrame {
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JLabel messageLabel;
     private javax.swing.JButton okButton;
+    private javax.swing.JComboBox showTimeInComboBox;
+    private javax.swing.JList testTypeList;
     private javax.swing.JTextField workingDirTextField;
     // End of variables declaration//GEN-END:variables
 
@@ -351,9 +365,12 @@ public class SettingsFrame extends javax.swing.JInternalFrame {
         }
 
         if (checkWorkingDir()) {
-            firePropertyChange("OK_PRESSED", false, new SettingsInfo(
-                    newWd
-            ));
+            settingsModel.setWorkingDir(newWd);
+            settingsModel.setEmulateEyesUsingMouse(emulateUsingMouseCheckBox.isSelected());
+            firePropertyChange("OK_PRESSED", false, settingsModel);
+//            firePropertyChange("OK_PRESSED", false, new SettingsModel(
+//                    newWd
+//            ));
             dispose();
         }
     }
