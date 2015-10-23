@@ -1,7 +1,6 @@
 package se.lu.scriptlogwindows;
 
 import java.awt.Rectangle;
-import java.beans.PropertyChangeListener;
 import javax.swing.JLayeredPane;
 import se.lu.scriptlogwindows.settingskeeper.SettingsKeeper;
 
@@ -15,7 +14,7 @@ public class ScriptLogWindowsApplication extends javax.swing.JFrame {
     private static Maf maf;
     private boolean makeVisibleAtStartup;
     private ScriptLogStarter sl;
-    //private ScriptLogModel slm = new ScriptLogModel();
+    private final ScriptLogModel slm = new ScriptLogModel();
 
     /**
      * Creates new form ScriptLogWindowsApplication
@@ -478,29 +477,19 @@ public class ScriptLogWindowsApplication extends javax.swing.JFrame {
 
     private void openNewLogFrame() {
         NewLogFrame nlf = new NewLogFrame();
+        nlf.addModel(slm);
         jDesktopPane1.add(nlf, JLayeredPane.MODAL_LAYER);
         FrameCenterer.center(nlf);
         nlf.setVisible(true);
-        //nlf.addPropertyChangeListener("OK_PRESSED", sl = new ScriptLogStarter(jDesktopPane1));
-        nlf.addPropertyChangeListener("OK_PRESSED", mmethod());
+        nlf.addPropertyChangeListener("OK_PRESSED", sl = new ScriptLogStarter(jDesktopPane1));
     }
-
+    
     private void openSettingsFrame() {
         SettingsFrame sef = new SettingsFrame();
         jDesktopPane1.add(sef, JLayeredPane.MODAL_LAYER);
         FrameCenterer.center(sef);
         sef.setVisible(true);
-        //sef.addPropertyChangeListener("OK_PRESSED", new SettingsChanger());
-        sef.addPropertyChangeListener("OK_PRESSED", settingsChanger());
-    }
-
-    private PropertyChangeListener mmethod() {
-        return new ScriptLogStarter(jDesktopPane1);
-    }
-
-    private PropertyChangeListener settingsChanger() {
-        SettingsChanger sc = new SettingsChanger();
-        return sc;
+        sef.addPropertyChangeListener("OK_PRESSED", new SettingsChanger());
     }
 
 }

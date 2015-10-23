@@ -3,6 +3,9 @@ package se.lu.scriptlogwindows;
 import java.lang.reflect.Field;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.prefs.Preferences;
+import se.lu.scriptlogwindows.settingskeeper.SettingsKeeper;
+import se.lu.scriptlogwindows.util.ScriptLogConstants;
 
 /**
  *
@@ -17,6 +20,16 @@ class SettingsModel {
     private boolean emulateEyesUsingMouse;
 
     public SettingsModel() {
+        SettingsKeeper sk = SettingsKeeper.INSTANCE;
+        Preferences prefs = sk.getPrefs();
+        workingDir = prefs.get(ScriptLogConstants.SETTINGS_WORKING_DIR, "unset");
+        defaultLanguage
+                = prefs.get(ScriptLogConstants.SETTINGS_DEFAULT_LANGUAGE, "Swedish");
+        showTimeIn = Integer.parseInt(
+                prefs.get(ScriptLogConstants.SETTINGS_SHOW_TIME_IN, "0"));
+        testType = new TestType("default");
+        emulateEyesUsingMouse = Boolean.parseBoolean(
+                prefs.get(ScriptLogConstants.SETTINGS_MOUSE_EMUL_EYES, "True"));
     }
 
     /**

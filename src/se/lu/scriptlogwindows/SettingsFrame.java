@@ -2,9 +2,7 @@ package se.lu.scriptlogwindows;
 
 import java.awt.Color;
 import java.io.File;
-import java.util.prefs.Preferences;
 import javax.swing.JFileChooser;
-import se.lu.scriptlogwindows.settingskeeper.SettingsKeeper;
 import se.lu.scriptlogwindows.util.ScriptLogConstants;
 
 /**
@@ -20,16 +18,6 @@ public class SettingsFrame extends javax.swing.JInternalFrame {
      * Creates new form SettingsFrame
      */
     public SettingsFrame() {
-        SettingsKeeper sk = SettingsKeeper.INSTANCE;
-        Preferences prefs = sk.getPrefs();
-        settingsModel.setWorkingDir(prefs.get(ScriptLogConstants.SETTINGS_WORKING_DIR, "unset"));
-        settingsModel.setDefaultLanguage(
-                prefs.get(ScriptLogConstants.SETTINGS_DEFAULT_LANGUAGE, "Swedish"));
-        settingsModel.setShowTimeIn(Integer.parseInt(
-                prefs.get(ScriptLogConstants.SETTINGS_SHOW_TIME_IN, "0")));
-        settingsModel.setTestType(null);
-        settingsModel.setEmulateEyesUsingMouse(Boolean.parseBoolean(
-                prefs.get(ScriptLogConstants.SETTINGS_MOUSE_EMUL_EYES, "True")));
         initComponents();
         workingDirTextField.setText(settingsModel.getWorkingDir());
         defaultLanguageComboBox.setSelectedItem(settingsModel.getDefaultLanguage());

@@ -11,7 +11,7 @@ class TestType {
     }
     private String fTestTypeName;
 
-    private TestType(String aTestTypeName) {
+    TestType(String aTestTypeName) {
         fTestTypeName=aTestTypeName;
     }
 

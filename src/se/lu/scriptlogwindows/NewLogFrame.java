@@ -6,6 +6,8 @@ package se.lu.scriptlogwindows;
  */
 public class NewLogFrame extends javax.swing.JInternalFrame {
 
+    private ScriptLogModel fScriptLogModel;
+    
     /**
      * Creates new form NewJInternalFrame
      */
@@ -465,14 +467,21 @@ public class NewLogFrame extends javax.swing.JInternalFrame {
     }
 
     private void okPressed() {
-        firePropertyChange("OK_PRESSED", false, new ScriptLogInfo(
-                fiNameTextField.getText(),
-                faNameTextField.getText(),
-                ageTextField.getText(),
-                mRadioButton.isSelected(),
-                fRadioButton.isSelected(),
-                otherInfoTextArea.getText()
-        ));
+        fScriptLogModel.setFirstName(fiNameTextField.getText());
+        fScriptLogModel.setFamilyName(faNameTextField.getText());
+        fScriptLogModel.setAge(ageTextField.getText());
+        fScriptLogModel.setmSelection(mRadioButton.isSelected());
+        fScriptLogModel.setfSelection(fRadioButton.isSelected());
+        fScriptLogModel.setOtherInfo(otherInfoTextArea.getText());
+        firePropertyChange("OK_PRESSED", false, fScriptLogModel);
+//        firePropertyChange("OK_PRESSED", false, new ScriptLogModel(
+//                fiNameTextField.getText(),
+//                faNameTextField.getText(),
+//                ageTextField.getText(),
+//                mRadioButton.isSelected(),
+//                fRadioButton.isSelected(),
+//                otherInfoTextArea.getText()
+//        ));
         dispose();
     }
 
@@ -500,4 +509,9 @@ public class NewLogFrame extends javax.swing.JInternalFrame {
         }
         return true;
     }
+
+    void addModel(ScriptLogModel slm) {
+        fScriptLogModel = slm;
+    }
+
 }

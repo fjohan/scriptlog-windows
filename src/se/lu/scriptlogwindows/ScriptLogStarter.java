@@ -22,15 +22,16 @@ class ScriptLogStarter implements PropertyChangeListener {
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        ScriptLogInfo sli = (ScriptLogInfo) evt.getNewValue();
-        sessionName = sli.getfText() + "_" + sli.getfText0();
-        Maf.println("Starting..." + sli.getfText()
-                + ", " + sli.getfText0()
-                + ", " + sli.getfText1()
-                + ", " + sli.isfSelected()
-                + ", " + sli.isfSelected0()
-                + ", " + sli.getfText2()
-        );
+        ScriptLogModel sli = (ScriptLogModel) evt.getNewValue();
+        sessionName = sli.getFirstName() + "_" + sli.getFamilyName();
+        Maf.println(sli.toShortString());
+//        Maf.println("Starting..." + sli.getfText()
+//                + ", " + sli.getfText0()
+//                + ", " + sli.getfText1()
+//                + ", " + sli.isfSelected()
+//                + ", " + sli.isfSelected0()
+//                + ", " + sli.getfText2()
+//        );
         newLog();
     }
 
