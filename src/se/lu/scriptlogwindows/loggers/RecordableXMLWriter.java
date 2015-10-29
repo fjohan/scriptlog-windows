@@ -12,6 +12,7 @@ import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
 import se.lu.scriptlogwindows.Maf;
+import se.lu.scriptlogwindows.ScriptLogModel;
 import se.lu.scriptlogwindows.settingskeeper.SettingsKeeper;
 import se.lu.scriptlogwindows.recordable.Recordable;
 import se.lu.scriptlogwindows.util.ScriptLogConstants;
@@ -28,10 +29,13 @@ public class RecordableXMLWriter implements Runnable {
     String fSessionName;
 
     protected BlockingQueue<Recordable> fBQueue;
+    private final ScriptLogModel fScriptLogModel;
 
-    public RecordableXMLWriter(BlockingQueue aBQueue, String aSessionName) {
+    public RecordableXMLWriter(BlockingQueue aBQueue, ScriptLogModel slm) {
         fBQueue = aBQueue;
-        fSessionName = aSessionName;
+        fScriptLogModel = slm;
+        fSessionName = fScriptLogModel.getFirstName() + "_" + fScriptLogModel.getFamilyName();
+
     }
 
     @Override

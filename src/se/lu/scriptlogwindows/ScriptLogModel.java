@@ -8,7 +8,7 @@ import java.util.logging.Logger;
  *
  * @author johanf
  */
-class ScriptLogModel extends SettingsModel {
+public class ScriptLogModel extends SettingsModel {
 
     private String firstName;
     private String familyName;

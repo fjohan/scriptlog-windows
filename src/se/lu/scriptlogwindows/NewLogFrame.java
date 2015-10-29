@@ -7,7 +7,7 @@ package se.lu.scriptlogwindows;
 public class NewLogFrame extends javax.swing.JInternalFrame {
 
     private ScriptLogModel fScriptLogModel;
-    
+
     /**
      * Creates new form NewJInternalFrame
      */
@@ -512,6 +512,14 @@ public class NewLogFrame extends javax.swing.JInternalFrame {
 
     void addModel(ScriptLogModel slm) {
         fScriptLogModel = slm;
+    }
+
+    void setDefaults() {
+        fiNameTextField.setText("exp");
+        faNameTextField.setText("subj");
+        ageTextField.setText("30");
+        mRadioButton.setSelected(true);
+        checkValues();
     }
 
 }

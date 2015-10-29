@@ -41,6 +41,7 @@ import javax.swing.text.JTextComponent;
 import javax.swing.undo.CannotRedoException;
 import javax.swing.undo.CannotUndoException;
 import javax.swing.undo.UndoManager;
+import se.lu.scriptlogwindows.ScriptLogModel;
 import se.lu.scriptlogwindows.recordable.CaretUpdateRecordable;
 import se.lu.scriptlogwindows.recordable.InsertStringRecordable;
 import se.lu.scriptlogwindows.recordable.KeyPressedRecordable;
@@ -241,7 +242,7 @@ public class ScriptJLogger {
 
     }
 
-    public void record(String sessionName) {
+    public void record(ScriptLogModel scriptLogModel) {
         if (isLOGGING_ON()) return;
         setLOGGING_ON(true);
         fJtp.setEditable(true);
@@ -256,12 +257,14 @@ public class ScriptJLogger {
         fJsp.getViewport().addChangeListener(changeL);
 
         bQueue = new LinkedBlockingQueue<Recordable>();
-        recordableConsumer = new RecordableXMLWriter(bQueue, sessionName);
+        recordableConsumer = new RecordableXMLWriter(bQueue, scriptLogModel);
         producerExec = Executors.newScheduledThreadPool(1);
         consumerExec = Executors.newCachedThreadPool();
 
         consumerExec.execute(recordableConsumer);
-        producerExec.scheduleAtFixedRate(mouseSampler, 0, 4, TimeUnit.MILLISECONDS);
+        if (scriptLogModel.isEmulateEyesUsingMouse()) {
+            producerExec.scheduleAtFixedRate(mouseSampler, 0, 4, TimeUnit.MILLISECONDS);
+        }
     }
 
     public void stop() {

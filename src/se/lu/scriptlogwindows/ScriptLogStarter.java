@@ -13,18 +13,25 @@ import se.lu.scriptlogwindows.sj.gui.ScriptJFrame;
 class ScriptLogStarter implements PropertyChangeListener {
 
     JDesktopPane fJdp;
+    private ScriptLogModel fScriptLogModel;
     ScriptJFrame sjf;
     String sessionName;
 
-    ScriptLogStarter(JDesktopPane jDesktopPane1) {
+//    ScriptLogStarter(JDesktopPane jDesktopPane1) {
+//        fJdp = jDesktopPane1;
+//    }
+
+    ScriptLogStarter(JDesktopPane jDesktopPane1, ScriptLogModel slm) {
         fJdp = jDesktopPane1;
+        fScriptLogModel = slm;
     }
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        ScriptLogModel sli = (ScriptLogModel) evt.getNewValue();
-        sessionName = sli.getFirstName() + "_" + sli.getFamilyName();
-        Maf.println(sli.toShortString());
+        //ScriptLogModel slm = (ScriptLogModel) evt.getNewValue();
+        fScriptLogModel = (ScriptLogModel) evt.getNewValue();
+        sessionName = getfScriptLogModel().getFirstName() + "_" + getfScriptLogModel().getFamilyName();
+        Maf.println(getfScriptLogModel().toShortString());
 //        Maf.println("Starting..." + sli.getfText()
 //                + ", " + sli.getfText0()
 //                + ", " + sli.getfText1()
@@ -48,17 +55,24 @@ class ScriptLogStarter implements PropertyChangeListener {
     }
 
     public void start() {
-        Maf.println("Starting for real!");
-        sjf.record(sessionName);
+        //Maf.println("Starting for real!");
+        sjf.record(fScriptLogModel);
     }
 
     public void stop() {
-        Maf.println("Stopping!");
+        //Maf.println("Stopping!");
         sjf.stop();
     }
 
     void close() {
         sjf.dispose();
+    }
+
+    /**
+     * @return the fScriptLogModel
+     */
+    public ScriptLogModel getfScriptLogModel() {
+        return fScriptLogModel;
     }
 
 }

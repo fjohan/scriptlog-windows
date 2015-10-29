@@ -5,6 +5,7 @@
  */
 package se.lu.scriptlogwindows.sj.gui;
 
+import se.lu.scriptlogwindows.ScriptLogModel;
 import se.lu.scriptlogwindows.loggers.ScriptJLogger;
 
 /**
@@ -89,8 +90,8 @@ public class ScriptJFrame extends javax.swing.JInternalFrame {
     private javax.swing.JTextPane jTextPane1;
     // End of variables declaration//GEN-END:variables
 
-    public void record(String sessionName) {
-        sjLogger.record(sessionName);
+    public void record(ScriptLogModel slm) {
+        sjLogger.record(slm);
         firePropertyChange("PROP_SJLOGGING", Boolean.FALSE, Boolean.TRUE);
     }
 

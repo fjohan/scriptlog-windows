@@ -10,11 +10,10 @@ import se.lu.scriptlogwindows.settingskeeper.SettingsKeeper;
  */
 public class ScriptLogWindowsApplication extends javax.swing.JFrame {
 
-    // comment
     private static Maf maf;
     private boolean makeVisibleAtStartup;
-    private ScriptLogStarter sl;
-    private final ScriptLogModel slm = new ScriptLogModel();
+    private ScriptLogStarter fScriptLogStarter;
+    private final ScriptLogModel fScriptLogModel = new ScriptLogModel();
 
     /**
      * Creates new form ScriptLogWindowsApplication
@@ -333,8 +332,8 @@ public class ScriptLogWindowsApplication extends javax.swing.JFrame {
                 .addComponent(jDesktopPane1))
         );
 
-        java.awt.Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
-        setBounds((screenSize.width-410)/2, (screenSize.height-349)/2, 410, 349);
+        setSize(new java.awt.Dimension(410, 349));
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void exitMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitMenuItemActionPerformed
@@ -346,19 +345,18 @@ public class ScriptLogWindowsApplication extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem13ActionPerformed
 
     private void panelStartMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_panelStartMenuItemActionPerformed
-        sl.start();
+        fScriptLogStarter.start(); // TODO: NullPointerException
     }//GEN-LAST:event_panelStartMenuItemActionPerformed
 
     private void fileNewMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fileNewMenuItemActionPerformed
-        openNewLogFrame();
+        openNewLogFrame(false);
 
     }//GEN-LAST:event_fileNewMenuItemActionPerformed
 
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
         if (!makeVisibleAtStartup) {
             maf.setVisible(true);
-            //openNewLogFrame();
-            //openJIF();
+            //openNewLogFrame(true);
             //openSettingsFrame();
             makeVisibleAtStartup = true;
         }
@@ -376,11 +374,11 @@ public class ScriptLogWindowsApplication extends javax.swing.JFrame {
     }//GEN-LAST:event_settingsSettingsMenuItemActionPerformed
 
     private void panelStopMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_panelStopMenuItemActionPerformed
-        sl.stop();
+        fScriptLogStarter.stop(); // TODO: NullPointerException
     }//GEN-LAST:event_panelStopMenuItemActionPerformed
 
     private void fileCloseMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fileCloseMenuItemActionPerformed
-        sl.close();
+        fScriptLogStarter.close(); // TODO: NullPointerException
     }//GEN-LAST:event_fileCloseMenuItemActionPerformed
 
     /**
@@ -413,6 +411,7 @@ public class ScriptLogWindowsApplication extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 new ScriptLogWindowsApplication().setVisible(true);
             }
@@ -475,15 +474,18 @@ public class ScriptLogWindowsApplication extends javax.swing.JFrame {
     private javax.swing.JMenuItem settingsSettingsMenuItem;
     // End of variables declaration//GEN-END:variables
 
-    private void openNewLogFrame() {
+    private void openNewLogFrame(boolean setDefaults) {
         NewLogFrame nlf = new NewLogFrame();
-        nlf.addModel(slm);
+        nlf.addModel(fScriptLogModel);
+        if (setDefaults) {
+            nlf.setDefaults();
+        }
         jDesktopPane1.add(nlf, JLayeredPane.MODAL_LAYER);
         FrameCenterer.center(nlf);
         nlf.setVisible(true);
-        nlf.addPropertyChangeListener("OK_PRESSED", sl = new ScriptLogStarter(jDesktopPane1));
+        nlf.addPropertyChangeListener("OK_PRESSED", fScriptLogStarter = new ScriptLogStarter(jDesktopPane1, fScriptLogModel));
     }
-    
+
     private void openSettingsFrame() {
         SettingsFrame sef = new SettingsFrame();
         jDesktopPane1.add(sef, JLayeredPane.MODAL_LAYER);
